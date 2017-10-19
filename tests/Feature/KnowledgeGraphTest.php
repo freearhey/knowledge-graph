@@ -4,8 +4,9 @@ namespace KnowledgeGraph\Tests;
 
 use KnowledgeGraph\Client;
 use KnowledgeGraph\KnowledgeGraph;
+use PHPUnit\Framework\TestCase;
 
-class KnowledgeGraphTest extends \PHPUnit_Framework_TestCase 
+class KnowledgeGraphTest extends TestCase 
 {
   private $client;
 
