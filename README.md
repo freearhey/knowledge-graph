@@ -1,4 +1,4 @@
-Knowledge Graph
+Knowledge Graph [![Build Status](https://travis-ci.org/freearhey/knowledge-graph.svg?branch=master)](https://travis-ci.org/freearhey/knowledge-graph)
 ===============
 
 A simple PHP client for working with [Google Knowledge Graph API](https://developers.google.com/knowledge-graph/).
