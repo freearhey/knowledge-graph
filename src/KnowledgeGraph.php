@@ -10,50 +10,54 @@ class KnowledgeGraph
   private $client;
 
   /**
-   * @var array
-   */
-  private $options;
-
-  /**
    * @param \KnowledgeGraph\Client $client
-   * @param array $options
    */
-  public function __construct($client, $options = [])
+  public function __construct($client)
   {
     $this->client = $client;
-
-    $this->options = $options;
   }
 
   /**
-   * Search by name
+   * Search by entity name
    * 
    * @param string $query
+   * @param string $type Restricts returned results to those of the specified types. (e.g. "Person")
+   * @param string $lang Language code (ISO 639) to run the query with (e.g. "es")
+   * @param string $limit Limits the number of results to be returned. (default: 20)
    *
-   * @return \Illuminate\Support\Collection Return collection of \KnowledgeGraph\Result
+   * @return \Illuminate\Support\Collection Return collection of \KnowledgeGraph\SearchResult
    */
-  public function search($query)
+  public function search($query, $type = null, $lang = null, $limit = null)
   {
     $results = $this->client->request([
-      'query' => $query
-    ], $this->options);
+      'query' => $query,
+      'types' => $type,
+      'languages' => $lang,
+      'limit' => $limit
+    ]);
 
     return $results;
   }
 
   /**
-   * Find by ID
+   * Find entity by ID
    * 
    * @param string $id (e.g. /m/0dl567)
+   * @param string $lang Language code (ISO 639) to run the query with (e.g. "es")
    *
-   * @return \Illuminate\Support\Collection Return collection of \KnowledgeGraph\Result
+   * @return \KnowledgeGraph\SearchResult|null Return \KnowledgeGraph\Result or null if results not found
    */
-  public function find($id)
+  public function find($id, $lang = null)
   {
     $results = $this->client->request([
-      'ids' => $id
-    ], $this->options);
+      'ids' => $id,
+      'languages' => $lang
+    ]);
 
-    return $results;
+    if($results->isEmpty()) {
+      return null;
+    }
+
+    return $results->first();
   }
 }

@@ -2,7 +2,8 @@
 
 namespace KnowledgeGraph;
 
-use KnowledgeGraph\Result;
+use KnowledgeGraph\SearchResult;
+use GuzzleHttp\Exception\ClientException;
 
 class Client
 {
@@ -37,26 +38,33 @@ class Client
    * Make request to Knowledge Graph API
    * 
    * @var array $params
-   * @var array $options
    *
    * @return \Illuminate\Support\Collection Return collection of \KnowledgeGraph\Result
    */
-  public function request($params, $options)
+  public function request($params)
   {
-    $query = array_merge($params, $options, [
+    $query = array_merge($params, [
       'key' => $this->key
     ]);
 
-    $response = $this->client->get(self::API_ENDPOINT, [
-      'query' => $query
-    ]);
+    try {
+
+      $response = $this->client->get(self::API_ENDPOINT, [
+        'query' => $query
+      ]);
+
+    } catch (ClientException $exception) {
+
+      return collect([]);
+
+    }
 
     $results = json_decode($response->getBody(), true);
 
     $output = [];
 
     for($i = 0; $i < count($results['itemListElement']); $i++) {
-      $output[] = new Result($results['itemListElement'][$i]);
+      $output[] = new SearchResult($results['itemListElement'][$i]);
     }
 
     return collect($output);

@@ -18,38 +18,12 @@ class KnowledgeGraphTest extends TestCase
 
     $client->setKey('AIzaSyD8CW1RqluFJE4J6KJ0RLy1AZ9kpjK39-0');
 
-    $this->client = $client;
+    $this->graph = new KnowledgeGraph($client);
   }
-
-  public function testSetResultsLimit()
+  
+  public function testSearchByName() 
   {
-    $options = ['limit' => 1];
-
-    $graph = new KnowledgeGraph($this->client, $options);
-
-    $results = $graph->search('taylor');
-
-    $this->assertEquals(1, $results->count());
-  }
-
-  public function testSetResultsType()
-  {
-    $options = ['types' => 'Book'];
-
-    $graph = new KnowledgeGraph($this->client, $options);
-
-    $results = $graph->search('taylor');
-
-    $singleResult = $results->first();
-
-    $this->assertContains('Book', $singleResult->type);
-  }
-
-  public function testSearchByTerm() 
-  {
-    $graph = new KnowledgeGraph($this->client);
-
-    $results = $graph->search('taylor swift');
+    $results = $this->graph->search('taylor swift');
 
     $singleResult = $results->first();
 
@@ -58,25 +32,56 @@ class KnowledgeGraphTest extends TestCase
     $this->assertEquals(['Thing', 'Person'], $singleResult->type);
   }
 
-  public function testFindBySingleId() 
+  public function testSetSearchType()
   {
-    $graph = new KnowledgeGraph($this->client);
-
-    $results = $graph->find('/m/0dl567');
+    $results = $this->graph->search('taylor', 'Book');
 
     $singleResult = $results->first();
 
-    $resultName = $singleResult->name;
-
-    $this->assertEquals('Taylor Swift', $resultName);
+    $this->assertContains('Book', $singleResult->type);
   }
 
-  public function testNoResults() 
+  public function testSetSearchLanguage()
   {
-    $graph = new KnowledgeGraph($this->client);
+    $results = $this->graph->search('taylor swift', null, 'fr');
 
-    $results = $graph->search('asdfgh');
+    $singleResult = $results->first();
+
+    $this->assertEquals('Auteure-compositrice-interprète', $singleResult->description);
+  }
+
+  public function testSetSearchLimit()
+  {
+    $results = $this->graph->search('taylor', null, null, 1);
+
+    $this->assertEquals(1, $results->count());
+  }
+
+  public function testSearchWithoutResults() 
+  {
+    $results = $this->graph->search('asdfgh');
 
     $this->assertEquals(true, $results->isEmpty());
+  }
+
+  public function testFindBySingleId() 
+  {
+    $result = $this->graph->find('/m/0dl567');
+
+    $this->assertEquals('Taylor Swift', $result->name);
+  }
+
+  public function testSetFindLanguage() 
+  {
+    $result = $this->graph->find('/m/0dl567', 'ru');
+
+    $this->assertEquals('Тейлор Свифт', $result->name);
+  }
+
+  public function testFindWithoutResults() 
+  {
+    $result = $this->graph->find('asdfgh');
+
+    $this->assertEquals(null, $result);
   }
 }
