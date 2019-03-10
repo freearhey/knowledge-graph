@@ -19,7 +19,7 @@ use KnowledgeGraph\KnowledgeGraph;
 
 $client = new Client();
 
-$client->setKey('YOUR_APP_KEY'); // More about API Key here: https://developers.google.com/knowledge-graph/how-tos/authorizing
+$client->setKey('YOUR_API_KEY'); // More about API Key here: https://developers.google.com/knowledge-graph/how-tos/authorizing
 
 $graph = new KnowledgeGraph($client);
 ```
