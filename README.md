@@ -3,94 +3,132 @@ Knowledge Graph [![Build Status](https://travis-ci.org/freearhey/knowledge-graph
 
 A simple PHP client for working with [Google Knowledge Graph API](https://developers.google.com/knowledge-graph/).
 
-### Installation
+## Installation
+
 ```sh
 composer require freearhey/knowledge-graph
 ```
 
-### Usage
+## Usage
 
 ```php
+require_once('vendor/autoload.php');
+
+use KnowledgeGraph\Client;
+use KnowledgeGraph\KnowledgeGraph;
+
 $client = new Client();
 
-$client->setKey('YOUR_APP_KEY');
+$client->setKey('YOUR_APP_KEY'); // More about API Key here: https://developers.google.com/knowledge-graph/how-tos/authorizing
 
-$graph = new KnowledgeGraph($client, $options);
+$graph = new KnowledgeGraph($client);
 ```
 
-#### Search
+### Available Methods
 
-Search by name:
+#### `search()`
+
+The `search` method give you a way to search in Knowledge Graph by entity name.
+
+```php
+$results = $graph->search($query, $type, $lang, $limit);
+```
+
+Arguments:
+
+- `$query`: term to search (required)
+- `$type`: specify the type of results (e.g. "Book") (List of available types: https://developers.google.com/knowledge-graph/)
+- `$lang`: specify the results language
+- `$limit`: set a custom limit (default: 20)
+
+Example:
+
 ```php
 $results = $graph->search('taylor swift');
+
+/*
+  Collection {
+    #items: array:20 [
+      0 => SearchResult {
+        id: "/m/0dl567"
+        name: "Taylor Swift"
+        type: array:2 [
+          0 => "Thing"
+          1 => "Person"
+        ]
+        description: "American singer"
+        image: array:2 [
+          "contentUrl" => "http://t0.gstatic.com/images?q=tbn:ANd9GcST848UJ0u31E6aoQfb2nnKZFyad7rwNF0ZLOCACGpu4jnboEzV"
+          "url" => "https://en.wikipedia.org/wiki/Begin_Again_(Taylor_Swift_song)"
+        ]
+        detailedDescription: array:3 [
+          "articleBody" => "Taylor Alison Swift is an American singer-songwriter. As one of the world's leading contemporary recording artists, she is known for narrative songs about her p ▶"
+          "url" => "https://en.wikipedia.org/wiki/Taylor_Swift"
+          "license" => "https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License"
+        ]
+        url: "http://taylorswift.com/"
+      }
+      ...
+    ]
+  }
+ */
 ```
 
-Find by ID:
+The `search` method always returns `Illuminate\Support\Collection` class with results. This means you can use all the [methods available](https://laravel.com/docs/5.6/collections#available-methods) in Laravel's Collections.
+
+#### `find()`
+
+The `find` method give you a way to search by entity ID.
+
 ```php
-$results = $graph->find('/m/0dl567');
+$results = $graph->find($id, $lang);
 ```
 
-Check if no search results
+Arguments:
+
+- `$id`: ID to search (e.g. "/m/0dl567")
+- `$lang`: specify the results language
+
+Example:
+
 ```php
-if($results->isEmpty()) {
-  echo 'no results';
-  die();
-}
+$results = $graph->find('/m/02j81');
+
+/*
+  SearchResult { 
+    id: "/m/02j81"
+    name: "Eiffel Tower"
+    type: array:5 [
+      0 => "Thing"
+      1 => "CivicStructure"
+      2 => "Place"
+      3 => "TouristAttraction"
+      4 => "Organization"
+    ]
+    description: "Tower in Paris, France"
+    image: array:2 [
+      "contentUrl" => "http://t1.gstatic.com/images?q=tbn:ANd9GcSao5YmaJqJVcSi60m9ypkaIC6bjKVJdoocuGBzgyTIu4MaMJ-t"
+      "url" => "https://commons.wikimedia.org/wiki/File:Eiffel_tower.svg"
+    ]
+    detailedDescription: array:3 [
+      "articleBody" => "The Eiffel Tower is a wrought-iron lattice tower on the Champ de Mars in Paris, France. It is named after the engineer Gustave Eiffel, whose company designed an ▶"
+      "url" => "https://en.wikipedia.org/wiki/Eiffel_Tower"
+      "license" => "https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License"
+    ]
+    url: "http://www.eiffel-tower.com/"
+  }
+ */
 ```
 
-#### Result
+### Testing
 
-Retrieve first result
-```php
-$singleResult = $results->first();
+```sh
+vendor/bin/phpunit
 ```
 
-Get result ID
-```php
-$resultId = $singleResult->id; // string(9) "/m/0dl567"
-```
+### Contribution
 
-Get result name
-```php
-$resultLabel = $singleResult->name; // string(12) "Taylor Swift"
-```
-
-Get result type
-```php
-$resultType = $singleResult->type; // array(2) { [0]=> string(5) "Thing", ... }
-```
-
-Get result description
-```php
-$resultDescription = $singleResult->description; // string(26) "American singer-songwriter"
-```
-
-Get result image
-```php
-$resultImage = $singleResult->image;
-
-/**
-* array(2) {
-*  ["contentUrl"]=> string(91) "http://t0.gstatic.com/images?q=tbn:ANd9GcST848UJ0u31E6aoQfb2nnKZFyad7rwNF0ZLOCACGpu4jnboEzV"
-*  ["url"]=> string(61) "https://en.wikipedia.org/wiki/Begin_Again_(Taylor_Swift_song)"
-* }
-*/
-```
-
-Get result detailed description
-```php
-$resultDetailedDescription = $singleResult->detailedDescription;
-
-/**
-* array(3) {
-*  ["articleBody"]=> string(210) "Taylor Alison Swift is an American singer-songwriter. One of the leading contemporary recording artists, she is known for narrative songs about her personal life, which have received widespread media coverage."
-*  ["url"]=> string(42) "https://en.wikipedia.org/wiki/Taylor_Swift"
-*  ["license"]=> string(108) "https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License"
-* }
-*/
-```
-
-That's all.
+If you find a bug or want to contribute to the code or documentation, you can help by submitting an [issue](https://github.com/freearhey/knowledge-graph/issues) or a [pull request](https://github.com/freearhey/knowledge-graph/pulls).
 
 ### License
 Knowledge Graph is licensed under the [MIT license](http://opensource.org/licenses/MIT).
