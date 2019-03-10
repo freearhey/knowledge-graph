@@ -3,3 +3,4 @@ composer.lock
 /helpers.php
 /index.php
 .idea
+/examples
