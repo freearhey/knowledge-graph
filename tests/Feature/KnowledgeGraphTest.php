@@ -16,7 +16,7 @@ class KnowledgeGraphTest extends TestCase
 
     $client = new Client();
 
-    $client->setKey('AIzaSyD8CW1RqluFJE4J6KJ0RLy1AZ9kpjK39-0');
+    $client->setKey(getenv('API_KEY'));
 
     $this->graph = new KnowledgeGraph($client);
   }

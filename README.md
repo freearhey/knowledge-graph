@@ -123,7 +123,7 @@ $results = $graph->find('/m/02j81');
 ### Testing
 
 ```sh
-vendor/bin/phpunit
+API_KEY=YOUR_API_KEY vendor/bin/phpunit
 ```
 
 ### Contribution
