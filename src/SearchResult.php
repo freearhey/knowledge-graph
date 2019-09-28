@@ -11,6 +11,12 @@ class SearchResult
   public $id;
 
   /**
+   * Result score
+   * @var float
+   */
+  public $score;
+
+  /**
    * Result name
    * @var string
    */
@@ -51,36 +57,24 @@ class SearchResult
    */
   public function __construct($data)
   {
-    $data = $this->formatData($data);
-
-    $this->id = $this->parseId($data['id']);
-    $this->name = $data['name'];
-    $this->type = $data['type'];
-    $this->description = $data['description'];
-    $this->image = $data['image'];
-    $this->detailedDescription = $data['detailedDescription'];
-    $this->url = $data['url'];
+    $this->parseData($data);
   }
 
-  private function formatData($data)
+  /**
+   * Parse input data
+   * 
+   * @param array $data
+   */
+  private function parseData($data)
   {
-    $id = isset($data['result']['@id']) ? $data['result']['@id'] : null;
-    $name = isset($data['result']['name']) ? $data['result']['name'] : null;
-    $type = isset($data['result']['@type']) ? $data['result']['@type'] : [];
-    $description = isset($data['result']['description']) ? $data['result']['description'] : null;
-    $image = isset($data['result']['image']) ? $data['result']['image'] : [];
-    $detailedDescription = isset($data['result']['detailedDescription']) ? $data['result']['detailedDescription'] : [];
-    $url = isset($data['result']['url']) ? $data['result']['url'] : null;
-
-    return [
-      'id' => $id,
-      'name' => $name,
-      'type' => $type,
-      'description' => $description,
-      'image' => $image,
-      'detailedDescription' => $detailedDescription,
-      'url' => $url
-    ];
+    $this->id = isset($data['result']['@id']) ? $this->parseId($data['result']['@id']) : null;
+    $this->score = $data['resultScore'];
+    $this->name = isset($data['result']['name']) ? $data['result']['name'] : null;
+    $this->type = isset($data['result']['@type']) ? $data['result']['@type'] : [];
+    $this->description = isset($data['result']['description']) ? $data['result']['description'] : null;
+    $this->image = isset($data['result']['image']) ? $data['result']['image'] : [];
+    $this->detailedDescription = isset($data['result']['detailedDescription']) ? $data['result']['detailedDescription'] : [];
+    $this->url = isset($data['result']['url']) ? $data['result']['url'] : null;
   }
 
   /**
