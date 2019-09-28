@@ -27,8 +27,6 @@ class KnowledgeGraphTest extends TestCase
     $singleResult = $results->first();
 
     $this->assertEquals('/m/0dl567', $singleResult->id);
-
-    $this->assertEquals(['Thing', 'Person'], $singleResult->type);
   }
 
   public function testSetSearchType()
