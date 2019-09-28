@@ -98,6 +98,7 @@ $results = $graph->find('/m/02j81');
 /*
   SearchResult { 
     id: "/m/02j81"
+    score: 26.98455
     name: "Eiffel Tower"
     type: array:5 [
       0 => "Thing"
