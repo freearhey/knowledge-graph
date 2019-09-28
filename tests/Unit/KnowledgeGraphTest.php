@@ -10,6 +10,8 @@ class KnowledgeGraphTest extends TestCase
 {
   private $client;
 
+  private $graph;
+
   public function setUp(): void
   {
 
@@ -56,7 +58,7 @@ class KnowledgeGraphTest extends TestCase
 
   public function testSearchWithoutResults() 
   {
-    $results = $this->graph->search('asdfgh');
+    $results = $this->graph->search('asdfgh123');
 
     $this->assertEquals(true, $results->isEmpty());
   }
@@ -77,7 +79,7 @@ class KnowledgeGraphTest extends TestCase
 
   public function testFindWithoutResults() 
   {
-    $result = $this->graph->find('asdfgh');
+    $result = $this->graph->find('asdfgh123');
 
     $this->assertEquals(null, $result);
   }
