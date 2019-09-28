@@ -10,9 +10,8 @@ class KnowledgeGraphTest extends TestCase
 {
   private $client;
 
-  public function setUp()
+  public function setUp(): void
   {
-    parent::setUp();
 
     $client = new Client();
 
