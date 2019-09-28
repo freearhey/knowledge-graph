@@ -4,3 +4,4 @@ composer.lock
 /index.php
 .idea
 /examples
+.phpunit.result.cache
