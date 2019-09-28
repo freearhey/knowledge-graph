@@ -47,7 +47,7 @@ class KnowledgeGraphTest extends TestCase
 
     $singleResult = $results->first();
 
-    $this->assertEquals('Auteure-compositrice-interprète', $singleResult->description);
+    $this->assertEquals('Compositrice-interprète', $singleResult->description);
   }
 
   public function testSetSearchLimit()
