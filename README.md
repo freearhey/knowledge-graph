@@ -51,6 +51,7 @@ $results = $graph->search('taylor swift');
     #items: array:20 [
       0 => SearchResult {
         id: "/m/0dl567"
+        score: 1466.352905
         name: "Taylor Swift"
         type: array:2 [
           0 => "Thing"
