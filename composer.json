@@ -3,7 +3,7 @@
     "description": "A simple PHP client for working with Google Knowledge Graph API",
     "keywords": ["google", "knowledge", "graph", "api", "client", "php"],
     "homepage": "https://github.com/freearhey/knowledge-graph",
-    "version": "2.1.0",
+    "version": "2.1.1",
     "type": "library",
     "license": "MIT",
     "authors": [
