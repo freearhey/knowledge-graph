@@ -43,6 +43,8 @@ class Client
    */
   public function request($params)
   {
+    $params['languages'] = explode(',', $params['languages']);
+
     $query = array_merge($params, [
       'key' => $this->key
     ]);
@@ -50,7 +52,7 @@ class Client
     try {
 
       $response = $this->client->get(self::API_ENDPOINT, [
-        'query' => $query
+        'query' => custom_build_query($query)
       ]);
 
     } catch (ClientException $exception) {
@@ -69,4 +71,18 @@ class Client
 
     return collect($output);
   }
+}
+
+function custom_build_query($data) {
+  $query = array();
+  foreach ($data as $name => $value) {
+    $value = (array) $value;
+    array_walk_recursive($value, function($value) use (&$query, $name) {
+      if(!empty($value)) {
+        $query[] = urlencode($name) . '=' . urlencode($value);
+      }
+    });
+  }
+
+  return implode("&", $query);
 }

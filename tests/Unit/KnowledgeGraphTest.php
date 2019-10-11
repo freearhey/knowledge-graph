@@ -49,6 +49,21 @@ class KnowledgeGraphTest extends TestCase
     $this->assertEquals('Compositrice-interprète', $singleResult->description);
   }
 
+  public function testSetSearchWithMultipleLanguages()
+  {
+    $results = $this->graph->search('taylor swift', null, 'fr,de');
+
+    $singleResult = $results->first();
+
+    $de = array_search('de', array_column($singleResult->description, '@language'));
+    
+    $fr = array_search('fr', array_column($singleResult->description, '@language'));
+
+    $this->assertEquals('Musikerin', $singleResult->description[$de]['@value']);
+
+    $this->assertEquals('Compositrice-interprète', $singleResult->description[$fr]['@value']);
+  }
+
   public function testSetSearchLimit()
   {
     $results = $this->graph->search('taylor', null, null, 1);
@@ -75,6 +90,19 @@ class KnowledgeGraphTest extends TestCase
     $result = $this->graph->find('/m/0dl567', 'ru');
 
     $this->assertEquals('Тейлор Свифт', $result->name);
+  }
+
+  public function testSetFindWithMultipleLanguages() 
+  {
+    $result = $this->graph->find('/m/0dl567', 'de,fr');
+
+    $de = array_search('de', array_column($result->description, '@language'));
+    
+    $fr = array_search('fr', array_column($result->description, '@language'));
+
+    $this->assertEquals('Musikerin', $result->description[$de]['@value']);
+
+    $this->assertEquals('Compositrice-interprète', $result->description[$fr]['@value']);
   }
 
   public function testFindWithoutResults() 
