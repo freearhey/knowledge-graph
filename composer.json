@@ -14,7 +14,7 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "tightenco/collect": "5.6.35",
+        "tightenco/collect": "^6.4",
         "guzzlehttp/guzzle": "^6.3"
     },
     "autoload": {
