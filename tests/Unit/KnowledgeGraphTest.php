@@ -59,7 +59,7 @@ class KnowledgeGraphTest extends TestCase
     
     $fr = array_search('fr', array_column($singleResult->description, '@language'));
 
-    $this->assertEquals('Musikerin', $singleResult->description[$de]['@value']);
+    $this->assertEquals('Sängerin', $singleResult->description[$de]['@value']);
 
     $this->assertEquals('Compositrice-interprète', $singleResult->description[$fr]['@value']);
   }
@@ -100,7 +100,7 @@ class KnowledgeGraphTest extends TestCase
     
     $fr = array_search('fr', array_column($result->description, '@language'));
 
-    $this->assertEquals('Musikerin', $result->description[$de]['@value']);
+    $this->assertEquals('Sängerin', $result->description[$de]['@value']);
 
     $this->assertEquals('Compositrice-interprète', $result->description[$fr]['@value']);
   }
