@@ -10,7 +10,7 @@
         "php"
     ],
     "homepage": "https://github.com/freearhey/knowledge-graph",
-    "version": "2.2.0",
+    "version": "2.3.0",
     "type": "library",
     "license": "MIT",
     "authors": [
