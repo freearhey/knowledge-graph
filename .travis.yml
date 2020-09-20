@@ -1,6 +1,5 @@
 language: php
-php:
-  - '7.2'
+php: "^7.2.15"
 before_script:
   - composer install
 script: phpunit
