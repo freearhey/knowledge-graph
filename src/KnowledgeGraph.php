@@ -19,7 +19,7 @@ class KnowledgeGraph
 
   /**
    * Search by entity name
-   * 
+   *
    * @param string $query
    * @param string $type Restricts returned results to those of the specified types. (e.g. "Person")
    * @param string $lang Language code (ISO 639) to run the query with (e.g. "es")
@@ -33,7 +33,7 @@ class KnowledgeGraph
       'query' => $query,
       'types' => $type,
       'languages' => $lang,
-      'limit' => $limit
+      'limit' => $limit,
     ]);
 
     return $results;
@@ -41,7 +41,7 @@ class KnowledgeGraph
 
   /**
    * Find entity by ID
-   * 
+   *
    * @param string $id (e.g. /m/0dl567)
    * @param string $lang Language code (ISO 639) to run the query with (e.g. "es")
    *
@@ -51,10 +51,10 @@ class KnowledgeGraph
   {
     $results = $this->client->request([
       'ids' => $id,
-      'languages' => $lang
+      'languages' => $lang,
     ]);
 
-    if($results->isEmpty()) {
+    if ($results->isEmpty()) {
       return null;
     }
 

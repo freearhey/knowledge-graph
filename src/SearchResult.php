@@ -62,7 +62,7 @@ class SearchResult
 
   /**
    * Parse input data
-   * 
+   *
    * @param array $data
    */
   private function parseData($data)
@@ -79,7 +79,7 @@ class SearchResult
 
   /**
    * Parse ID of result
-   * 
+   *
    * @param string $string Knowledge Graph raw ID (e.g. kg:/m/0dl567)
    *
    * @return string Result ID
