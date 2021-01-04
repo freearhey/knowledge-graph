@@ -1,40 +1,40 @@
 {
-    "name": "freearhey/knowledge-graph",
-    "description": "A simple PHP client for working with Google Knowledge Graph API",
-    "keywords": [
-        "google",
-        "knowledge",
-        "graph",
-        "api",
-        "client",
-        "php"
-    ],
-    "homepage": "https://github.com/freearhey/knowledge-graph",
-    "version": "2.3.0",
-    "type": "library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Arhey",
-            "email": "free.arhey@gmail.com"
-        }
-    ],
-    "minimum-stability": "stable",
-    "require": {
-        "tightenco/collect": "^7.11",
-        "guzzlehttp/guzzle": "^6.3"
-    },
-    "autoload": {
-        "psr-4": {
-            "KnowledgeGraph\\": "src"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Tests\\": "tests"
-        }
-    },
-    "require-dev": {
-        "phpunit/phpunit": "8.0.2"
+  "name": "freearhey/knowledge-graph",
+  "description": "A simple PHP client for working with Google Knowledge Graph API",
+  "keywords": [
+    "google",
+    "knowledge",
+    "graph",
+    "api",
+    "client",
+    "php"
+  ],
+  "homepage": "https://github.com/freearhey/knowledge-graph",
+  "version": "2.3.0",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Arhey",
+      "email": "free.arhey@gmail.com"
     }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "tightenco/collect": "^8.19",
+    "guzzlehttp/guzzle": "^7.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "KnowledgeGraph\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "9.5.0"
+  }
 }
